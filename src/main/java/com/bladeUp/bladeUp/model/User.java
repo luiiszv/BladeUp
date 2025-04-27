@@ -7,18 +7,14 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "usuarios")
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     private String name;
     private String lastName;
     private String email;
     private Date birthdate;
     private String password;
-
-
 }
-
-
-
