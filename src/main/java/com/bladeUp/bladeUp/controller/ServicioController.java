@@ -1,8 +1,10 @@
 package com.bladeUp.bladeUp.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.bladeUp.bladeUp.auth.RolValidator;
+import com.bladeUp.bladeUp.exception.ServicioNotFoundException;
 import com.bladeUp.bladeUp.model.Servicio;
 import com.bladeUp.bladeUp.repository.ServicioRepository;
 
@@ -17,14 +19,13 @@ public class ServicioController {
     @Autowired
     private ServicioRepository servicioRepository;
 
-     @PostMapping
+    @PostMapping
     public Object crearServicio(@RequestBody Servicio servicio, HttpServletRequest request) {
         if (!RolValidator.tieneRol(request, "BARBERO")) {
             return "Acceso denegado: solo Barberos pueden crear servicios ❌";
         }
         return servicioRepository.save(servicio);
     }
-
 
     @GetMapping
     public List<Servicio> listarServicios() {
@@ -34,13 +35,13 @@ public class ServicioController {
     @GetMapping("/{id}")
     public Servicio obtenerServicioPorId(@PathVariable Long id) {
         return servicioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                .orElseThrow(() -> new ServicioNotFoundException(id));
     }
 
     @PutMapping("/{id}")
     public Servicio actualizarServicio(@PathVariable Long id, @RequestBody Servicio servicioActualizado) {
         Servicio servicio = servicioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                .orElseThrow(() -> new ServicioNotFoundException(id));
 
         servicio.setNombre(servicioActualizado.getNombre());
         servicio.setDescripcion(servicioActualizado.getDescripcion());
