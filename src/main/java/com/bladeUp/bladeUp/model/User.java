@@ -7,6 +7,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
