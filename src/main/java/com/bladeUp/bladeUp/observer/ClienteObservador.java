@@ -7,7 +7,7 @@ public class ClienteObservador implements ObservadorSolicitud {
 
     @Override
     public void notificar(Solicitud solicitud) {
-        System.out.println("🔔 Notificación: Estimado " + solicitud.getCliente().getNombre() +
+        System.out.println("Notificación: Estimado " + solicitud.getCliente().getNombre() +
                 ", su solicitud ha sido " + solicitud.getEstadoActual().toLowerCase() + ".");
     }
 }

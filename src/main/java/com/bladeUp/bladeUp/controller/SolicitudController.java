@@ -56,7 +56,7 @@ public class SolicitudController {
                 .orElse(null);
 
         if (bloqueCorrecto == null) {
-            return "❌ No hay horario disponible para agendar.";
+            return "No hay horario disponible para agendar.";
         }
 
         // Marcar como no disponible
@@ -66,7 +66,7 @@ public class SolicitudController {
         // Crear la solicitud en estado PENDIENTE
         solicitudRepository.save(solicitud);
 
-        return "✅ Solicitud creada correctamente y horario reservado.";
+        return "Solicitud creada correctamente y horario reservado.";
     }
 
     @GetMapping
@@ -134,7 +134,7 @@ public class SolicitudController {
                 .orElse(null);
 
         if (bloque != null) {
-            bloque.setDisponible(true); // 🔥 Liberamos
+            bloque.setDisponible(true); //iberamos
             agendaRepository.save(bloque);
         }
 
@@ -158,7 +158,7 @@ public class SolicitudController {
                 .orElseThrow(() -> new RuntimeException("Bloque de agenda no encontrado"));
 
         if (!agenda.isDisponible()) {
-            return "❌ Horario no disponible, ya fue reservado.";
+            return "Horario no disponible, ya fue reservado.";
         }
 
         // Crear nueva solicitud
@@ -176,7 +176,7 @@ public class SolicitudController {
         agenda.setDisponible(false);
         agendaRepository.save(agenda);
 
-        return "✅ Solicitud creada y horario reservado exitosamente.";
+        return "Solicitud creada y horario reservado exitosamente.";
     }
 
 }

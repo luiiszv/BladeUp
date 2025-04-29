@@ -38,7 +38,7 @@ public class AuthController {
             String token = JwtUtils.generateToken(cliente.getCorreo(), cliente.getRol());
             return "Token: " + token;
         } else {
-            return "Credenciales de Cliente incorrectas ❌";
+            return "Credenciales de Cliente incorrectas";
         }
     }
     
@@ -49,7 +49,7 @@ public class AuthController {
             String token = JwtUtils.generateToken(barbero.getCorreo(), barbero.getRol());
             return "Token: " + token;
         } else {
-            return "Credenciales de Barbero incorrectas ❌";
+            return "Credenciales de Barbero incorrectas";
         }
     }
 }

@@ -14,13 +14,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
 
-        // 🚨 IMPORTANTE: si la ruta es /api/auth/**, dejamos pasar sin validar token
+        // si la ruta es /api/auth/**, dejamos pasar sin validar token
         if (path.startsWith("/api/auth/")) {
             filterChain.doFilter(request, response);
             return;

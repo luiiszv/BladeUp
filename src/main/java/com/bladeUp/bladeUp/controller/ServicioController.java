@@ -22,7 +22,7 @@ public class ServicioController {
     @PostMapping
     public Object crearServicio(@RequestBody Servicio servicio, HttpServletRequest request) {
         if (!RolValidator.tieneRol(request, "BARBERO")) {
-            return "Acceso denegado: solo Barberos pueden crear servicios ❌";
+            return "Acceso denegado: solo Barberos pueden crear servicios";
         }
         return servicioRepository.save(servicio);
     }
