@@ -29,7 +29,7 @@ public class Solicitud {
     private Date fechaCreacion;
 
 
-    @Transient // No guardar el objeto en base de datos
+    @Transient 
     private EstadoSolicitud estado;
     private String estadoActual;
 
@@ -50,7 +50,6 @@ public class Solicitud {
         this.horario = horario;
     }
 
-    // Cambiar al siguiente estado
     public void cambiarEstado() {
         estado.siguiente(this);
         this.estadoActual = estado.getNombreEstado();
@@ -72,7 +71,7 @@ public class Solicitud {
         }
     }
 
-    // GETTERS
+  
     public Long getId() {
         return id;
     }
@@ -101,7 +100,7 @@ public class Solicitud {
         return estadoActual;
     }
 
-    // SETTERS
+    
     public void setId(Long id) {
         this.id = id;
     }

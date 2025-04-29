@@ -16,5 +16,5 @@ public class Barbero extends Usuario {
         super(nombre, correo, telefono, password, rol);
     }
 
-    // Getters y Setters
+  
 }

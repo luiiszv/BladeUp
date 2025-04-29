@@ -7,7 +7,7 @@ public class Cancelada implements EstadoSolicitud {
 
     @Override
     public void siguiente(Solicitud solicitud) {
-        // No avanza más
+    
     }
 
     @Override

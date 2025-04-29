@@ -18,7 +18,7 @@ public class ValidadorServicioActivo implements ValidadorSolicitud {
             throw new RuntimeException("El servicio no está activo.");
         }
 
-        // Si pasa, continúa
+
         if (siguiente != null) {
             siguiente.validar(solicitud);
         }

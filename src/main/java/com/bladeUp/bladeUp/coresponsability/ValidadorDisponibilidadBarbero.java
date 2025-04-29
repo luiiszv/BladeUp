@@ -14,12 +14,12 @@ public class ValidadorDisponibilidadBarbero implements ValidadorSolicitud {
 
     @Override
     public void validar(Solicitud solicitud) {
-        // 🔎 Aquí podrías consultar si el barbero está disponible en ese horario
+    
         if (solicitud.getBarbero() == null) {
             throw new RuntimeException("El barbero no está asignado.");
         }
 
-        // Si pasa, continúa
+     
         if (siguiente != null) {
             siguiente.validar(solicitud);
         }

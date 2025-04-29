@@ -18,7 +18,7 @@ public class ValidadorClienteDisponible implements ValidadorSolicitud {
             throw new RuntimeException("El cliente no está asignado.");
         }
 
-        // Si pasa, continúa
+    
         if (siguiente != null) {
             siguiente.validar(solicitud);
         }

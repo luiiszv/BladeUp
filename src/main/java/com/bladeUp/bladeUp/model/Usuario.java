@@ -15,7 +15,7 @@ public abstract class Usuario {
     private String password;
     private String rol;
 
-    // Constructor vacío (obligatorio JPA)
+
     public Usuario() {
     }
 
@@ -27,7 +27,7 @@ public abstract class Usuario {
         this.rol = rol;
     }
 
-    // GETTERS
+ 
     public Long getId() {
         return id;
     }
@@ -52,7 +52,7 @@ public abstract class Usuario {
         return rol;
     }
 
-    // SETTERS
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

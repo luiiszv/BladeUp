@@ -7,7 +7,7 @@ public class Finalizada implements EstadoSolicitud {
 
     @Override
     public void siguiente(Solicitud solicitud) {
-        // No avanza más
+        
     }
 
     @Override

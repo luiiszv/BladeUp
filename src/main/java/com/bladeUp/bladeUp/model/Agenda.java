@@ -14,13 +14,13 @@ public class Agenda {
     private Long id;
 
     @ManyToOne
-    private Barbero barbero; // Barbero asignado
+    private Barbero barbero; 
 
-    private LocalDate fecha; // Día de la cita
-    private LocalTime horaInicio; // Hora de inicio disponible
-    private LocalTime horaFin;    // Hora de fin
+    private LocalDate fecha; 
+    private LocalTime horaInicio; 
+    private LocalTime horaFin;    
 
-    private boolean disponible; // true = disponible, false = reservado
+    private boolean disponible; 
 
     public Agenda() {}
 
@@ -32,7 +32,6 @@ public class Agenda {
         this.disponible = disponible;
     }
 
-    // Getters y Setters
 
     public Long getId() {
         return id;

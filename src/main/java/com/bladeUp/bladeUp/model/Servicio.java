@@ -22,7 +22,7 @@ public class Servicio {
         this.duracionMinutos = duracionMinutos;
     }
 
-    // GETTERS
+
     public Long getId() {
         return id;
     }
@@ -43,7 +43,7 @@ public class Servicio {
         return duracionMinutos;
     }
 
-    // SETTERS
+    
     public void setId(Long id) {
         this.id = id;
     }

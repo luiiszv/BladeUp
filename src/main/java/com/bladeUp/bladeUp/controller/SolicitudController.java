@@ -42,12 +42,12 @@ public class SolicitudController {
 
     @PostMapping("/crear")
     public String crearSolicitud(@RequestBody Solicitud solicitud) {
-        // Extraemos datos
+        
         Long barberoId = solicitud.getBarbero().getId();
-        String horario = solicitud.getHorario(); // ejemplo: "10:00"
-        LocalDate fechaHoy = LocalDate.now(); // O podría venir en el RequestBody
+        String horario = solicitud.getHorario(); 
+        LocalDate fechaHoy = LocalDate.now(); 
 
-        // Buscar si existe un bloque disponible en la Agenda
+
         List<Agenda> bloquesDisponibles = agendaRepository.findByBarberoIdAndFecha(barberoId, fechaHoy);
 
         Agenda bloqueCorrecto = bloquesDisponibles.stream()
@@ -59,11 +59,10 @@ public class SolicitudController {
             return "No hay horario disponible para agendar.";
         }
 
-        // Marcar como no disponible
+      
         bloqueCorrecto.setDisponible(false);
         agendaRepository.save(bloqueCorrecto);
 
-        // Crear la solicitud en estado PENDIENTE
         solicitudRepository.save(solicitud);
 
         return "Solicitud creada correctamente y horario reservado.";
@@ -96,16 +95,14 @@ public class SolicitudController {
         Solicitud solicitud = solicitudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
 
-        // Crear validadores
+  
         ValidadorSolicitud validador1 = new ValidadorDisponibilidadBarbero();
         ValidadorSolicitud validador2 = new ValidadorClienteDisponible();
         ValidadorSolicitud validador3 = new ValidadorServicioActivo();
 
-        // Encadenarlos
         validador1.setSiguiente(validador2);
         validador2.setSiguiente(validador3);
 
-        // Validar antes de cambiar estado
         validador1.validar(solicitud);
 
         solicitud.agregarObservador(new ClienteObservador());
@@ -120,25 +117,25 @@ public class SolicitudController {
         Solicitud solicitud = solicitudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
 
-        // Liberar el bloque de agenda
+ 
         Long barberoId = solicitud.getBarbero().getId();
         String horario = solicitud.getHorario();
-        LocalDate fechaHoy = LocalDate.now(); // O la fecha que uses para las citas
+        LocalDate fechaHoy = LocalDate.now(); 
 
         List<Agenda> bloques = agendaRepository.findByBarberoIdAndFecha(barberoId, fechaHoy);
 
-        // Buscar el bloque específico
+    
         Agenda bloque = bloques.stream()
                 .filter(a -> !a.isDisponible() && a.getHoraInicio().toString().equals(horario))
                 .findFirst()
                 .orElse(null);
 
         if (bloque != null) {
-            bloque.setDisponible(true); //iberamos
+            bloque.setDisponible(true); 
             agendaRepository.save(bloque);
         }
 
-        // Cancelar la solicitud
+        
         solicitud.setEstado(new Cancelada());
         solicitud.setEstadoActual("CANCELADA");
         solicitudRepository.save(solicitud);
@@ -161,18 +158,17 @@ public class SolicitudController {
             return "Horario no disponible, ya fue reservado.";
         }
 
-        // Crear nueva solicitud
+      
         Solicitud solicitud = new Solicitud();
         solicitud.setCliente(clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new ClienteNotFoundException(clienteId)));
         solicitud.setBarbero(agenda.getBarbero());
         solicitud.setServicio(servicioRepository.findById(servicioId)
                 .orElseThrow(() -> new ServicioNotFoundException(servicioId)));
-        solicitud.setHorario(agenda.getHoraInicio().toString()); // Guardamos el horario exacto
+        solicitud.setHorario(agenda.getHoraInicio().toString()); 
 
         solicitudRepository.save(solicitud);
 
-        // Marcar el horario como no disponible
         agenda.setDisponible(false);
         agendaRepository.save(agenda);
 

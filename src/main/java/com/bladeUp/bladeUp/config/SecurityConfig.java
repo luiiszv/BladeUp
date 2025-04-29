@@ -16,8 +16,8 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Permitir login y register sin token
-                        .anyRequest().authenticated() // Cualquier otra ruta requiere token
+                        .requestMatchers("/api/auth/**").permitAll() 
+                        .anyRequest().authenticated() 
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();

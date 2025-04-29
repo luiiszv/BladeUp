@@ -11,9 +11,8 @@ import java.util.Date;
 public class JwtUtils {
 
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long EXPIRATION_TIME = 3600_000; // 1 hora en milisegundos
+    private static final long EXPIRATION_TIME = 3600_000; 
 
-    // 👇 AQUÍ la firma correcta
     public static String generateToken(String correo, String rol) {
         return Jwts.builder()
                 .setSubject(correo)
