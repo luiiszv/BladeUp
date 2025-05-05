@@ -97,7 +97,6 @@ public class GlobalExceptionHandler {
     }
 
 
-
     //Vlida que los campos correctos se envien en el req.body sisi
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<?>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -109,4 +108,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponse.error("Error de validación", errors));
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<?>> handleGenericException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error("Error inesperado", Map.of("error", ex.getMessage())));
+    }
+
 }

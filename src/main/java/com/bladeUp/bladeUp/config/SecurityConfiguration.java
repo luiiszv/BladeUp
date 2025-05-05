@@ -25,7 +25,7 @@ public class SecurityConfiguration {
 
     private UserService userService;
 
-    // Usamos inyección por constructor, pero también puedes usar @Autowired en los campos si prefieres.
+    // inyección por constructor
     public SecurityConfiguration(@Lazy UserService userService) {
         this.userService = userService;
     }
@@ -39,7 +39,8 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/login").permitAll() //Public
-                        .requestMatchers("/api/clients").permitAll() //Public
+                        .requestMatchers("/api/clients").permitAll()
+                        .requestMatchers("/api/auth/verify").permitAll() //Public
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -60,7 +61,6 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
