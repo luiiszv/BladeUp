@@ -3,6 +3,10 @@ package com.bladeUp.bladeUp.model;
 import jakarta.persistence.*;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -57,4 +61,13 @@ public class Client extends User { // Hereda de User
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

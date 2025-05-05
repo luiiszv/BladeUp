@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ import static java.rmi.server.LogStream.log;
 
 @Service
 
-public class UserService implements IUserInterface {
+public class UserService implements UserDetailsService {
 
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
@@ -69,5 +71,15 @@ public class UserService implements IUserInterface {
         // Log exitoso (INFO)
         log.info("Autenticación exitosa: {}", email);
         return user;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Buscar el usuario en la base de datos
+        User user = userRepository.findUserByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+
+        return user; // Aquí el objeto `User` debe implementar `UserDetails`
     }
 }

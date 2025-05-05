@@ -4,13 +4,12 @@ package com.bladeUp.bladeUp.controller;
 import com.bladeUp.bladeUp.model.User;
 import com.bladeUp.bladeUp.model.dto.request.LoginRequestDto;
 import com.bladeUp.bladeUp.model.dto.response.AuthResponse;
-import com.bladeUp.bladeUp.security.JwtService;
+import com.bladeUp.bladeUp.service.JwtService;
 import com.bladeUp.bladeUp.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

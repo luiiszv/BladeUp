@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-
+import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED) // Estrategia JOINED para herencia en BD
 @Getter
 @Setter // Lombok: genera getters y setters
 @NoArgsConstructor // Lombok: constructor sin argumentos
 
-public abstract class User {
+public abstract class User implements UserDetails  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremental
