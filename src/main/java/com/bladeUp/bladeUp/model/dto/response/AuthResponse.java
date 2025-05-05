@@ -10,13 +10,15 @@ public class AuthResponse {
     private String email;
     private String fullName;
     private boolean isActive;
+    private String token;
 
 
-    public AuthResponse(Long user_id, String email, String fullName, boolean isActive) {
+    public AuthResponse(Long user_id, String email, String fullName, boolean isActive, String token) {
         this.user_id = user_id;
         this.email = email;
         this.fullName = fullName;
         this.isActive = isActive;
+        this.token = token;
     }
 
 

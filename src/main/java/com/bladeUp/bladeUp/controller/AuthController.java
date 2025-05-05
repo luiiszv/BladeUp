@@ -4,6 +4,7 @@ package com.bladeUp.bladeUp.controller;
 import com.bladeUp.bladeUp.model.User;
 import com.bladeUp.bladeUp.model.dto.request.LoginRequestDto;
 import com.bladeUp.bladeUp.model.dto.response.AuthResponse;
+import com.bladeUp.bladeUp.security.JwtService;
 import com.bladeUp.bladeUp.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -24,9 +25,13 @@ public class AuthController {
     private UserService userService;
 
 
+    private final JwtService jwtService;
+
+
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -45,12 +50,18 @@ public class AuthController {
         // Log exitoso (nivel INFO)
         log.info("Login exitoso para userId: {}", user.getUserId());
 
+
+        // Generar el JWT
+        String token = jwtService.generateToken(user);
+
+
         return ResponseEntity.ok(
                 new AuthResponse(
                         user.getUserId(),
                         user.getEmail(),
                         user.getFirstName() + " " + user.getLastName(),
-                        user.isActive()
+                        user.isActive(),
+                        token
                 )
         );
 
