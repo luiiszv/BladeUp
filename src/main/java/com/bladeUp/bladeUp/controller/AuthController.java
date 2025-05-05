@@ -7,7 +7,6 @@ import com.bladeUp.bladeUp.model.dto.response.AuthResponse;
 import com.bladeUp.bladeUp.payload.ApiResponse;
 import com.bladeUp.bladeUp.service.JwtService;
 import com.bladeUp.bladeUp.service.UserService;
-
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.security.oauth2.jwt.Jwt;
-
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-
 
 public class AuthController {
 

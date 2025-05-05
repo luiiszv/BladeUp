@@ -52,8 +52,34 @@ public class Barber extends User { // Hereda de User
         return List.of();
     }
 
+    //Getters
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public Integer getYearsExperience() {
+        return yearsExperience;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    //Seters
+    public void setShopAddress(String shopAddress){
+        this.shopAddress= shopAddress;
+
+    }
+
+
     @Override
     public String getUsername() {
         return "";
     }
+
+
 }
