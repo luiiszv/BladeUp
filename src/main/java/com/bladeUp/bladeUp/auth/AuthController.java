@@ -3,6 +3,7 @@ package com.bladeUp.bladeUp.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.bladeUp.bladeUp.exception.ErrorResponse;
 import com.bladeUp.bladeUp.model.Barbero;
 import com.bladeUp.bladeUp.model.Cliente;
 import com.bladeUp.bladeUp.repository.BarberoRepository;
@@ -18,6 +19,8 @@ public class AuthController {
 
     @Autowired
     private BarberoRepository barberoRepository;
+
+    private ErrorResponse errores = new ErrorResponse("Login Exitoso", 200);
 
     @PostMapping("/register/cliente")
     public Cliente registrarCliente(@RequestBody Cliente cliente) {
@@ -36,12 +39,13 @@ public class AuthController {
         Cliente cliente = clienteRepository.findByCorreo(loginDTO.getCorreo());
         if (cliente != null && cliente.getPassword().equals(loginDTO.getPassword())) {
             String token = JwtUtils.generateToken(cliente.getCorreo(), cliente.getRol());
-            return "Token: " + token;
+            return "Token: " + token + errores.getStatus();
+
         } else {
-            return "Credenciales de Cliente incorrectas";
+            return "Credenciales de Cliente incorrectas" + errores.getStatus();
         }
     }
-    
+
     @PostMapping("/login/barbero")
     public String loginBarbero(@RequestBody LoginDTO loginDTO) {
         Barbero barbero = barberoRepository.findByCorreo(loginDTO.getCorreo());
