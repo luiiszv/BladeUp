@@ -32,7 +32,6 @@ public abstract class User {
     @Column(unique = true, nullable = false) // Email único en la BD
     private String email;
 
-
     private Date birthdate;
     @Column(nullable = false)
     private String password;
@@ -40,9 +39,75 @@ public abstract class User {
     @Column(nullable = false)
     private String phoneNumber;
 
+    // Método conveniente para verificar estado
+    public boolean isActive() {
+        return Boolean.TRUE.equals(active);
+    }
 
-    //    @NotBlank(message = "First name is required")  validaciones mas adelante si sabe
-    //    @Email(message = "Email should be valid") // Validación formato email
-    //    @Size(min = 8, message = "Password must be at least 8 characters") // Mínimo 8 caracteres
+
+    //Getters
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public Long getUserId() {
+        return user_id;
+    }
+
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getIsActive() {
+        return phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    //Setters
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setIsActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
 
 }

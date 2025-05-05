@@ -1,59 +1,68 @@
 package com.bladeUp.bladeUp.controller;
 
-import com.bladeUp.bladeUp.model.Client;
+import com.bladeUp.bladeUp.model.dto.request.ClientRequestDto;
+import com.bladeUp.bladeUp.payload.ApiResponse;
+import com.bladeUp.bladeUp.model.dto.response.ClientResponseDTO;
 import com.bladeUp.bladeUp.service.ClientService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClienteController {
+public class ClientController {
 
     private final ClientService clientService;
 
+
     @Autowired
-    public ClienteController(ClientService clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
-    // 🔵 Obtener todos los clientes
-    @GetMapping
-    public ResponseEntity<List<Client>> getAllClientes() {
-        List<Client> clientes = clientService.getAllClients();
-        return ResponseEntity.ok(clientes);
-    }
-
-    // 🔵 Obtener un cliente por ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getClienteById(@PathVariable Long id) {
-        Optional<Client> cliente = clientService.getClientById(id);
-        if (cliente.isPresent()) {
-            return ResponseEntity.ok(cliente.get());
-        } else {
-            return ResponseEntity.status(404).body("Cliente no encontrado");
+    public ResponseEntity<ApiResponse<ClientResponseDTO>> getClienteById(@PathVariable Long id) {
+        try {
+            ClientResponseDTO cliente = clientService.getClientById(id);
+            return ResponseEntity.ok(
+                    new ApiResponse<>(true, "Customer found", cliente)
+            );
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(false, e.getMessage(), null));
         }
     }
 
-    // 🟢 Registrar un nuevo cliente
-    @PostMapping("/register")
-    public ResponseEntity<?> registerCliente(@RequestBody Client cliente) {
-        Client nuevoCliente = clientService.saveOrUpdateClient(cliente);
-        return ResponseEntity.status(201).body(nuevoCliente);
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ClientResponseDTO>>> getAllClientes() {
+        List<ClientResponseDTO> clientes = clientService.getAllClients();
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Customers found", clientes)
+        );
     }
 
-    // 🔴 Eliminar un cliente
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
-        Optional<Client> cliente = clientService.getClientById(id);
-        if (cliente.isPresent()) {
+    public ResponseEntity<ApiResponse<String>> deleteCliente(@PathVariable Long id) {
+        if (clientService.existsClientById(id)) {
             clientService.deleteClientById(id);
-            return ResponseEntity.ok("Cliente eliminado exitosamente");
+            return ResponseEntity.ok(
+                    new ApiResponse<>(true, "Customer successfully deleted", null)
+            );
         } else {
-            return ResponseEntity.status(404).body("Cliente no encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(false, "Customer not found", null));
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<ClientResponseDTO>> register(@Valid @RequestBody ClientRequestDto dto) {
+        ClientResponseDTO client = clientService.register(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(true, "Customer successfully registered", client));
     }
 }
