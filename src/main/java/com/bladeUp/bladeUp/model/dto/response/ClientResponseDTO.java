@@ -16,7 +16,6 @@ public class ClientResponseDTO implements Serializable {
     private Integer loyaltyPoints = 0;
     private String preferredServices;
 
-
     public ClientResponseDTO() {
     }
 
